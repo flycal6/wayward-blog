@@ -1,0 +1,75 @@
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'eclipse-wtp'
+
+project.webAppDirName = 'WebContent'
+
+// change name
+group = 'com.wayward'
+version = '0.0.1-SNAPSHOT'
+
+ext {
+  springVersion = "5.0.8.RELEASE"
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+eclipse {
+  classpath {
+    downloadSources = true
+  }
+}
+
+sourceSets {
+  main {
+    java.srcDirs 'src'
+    resources.srcDirs 'src/resources'
+  }
+  test {
+    java {
+      srcDir 'test'
+    }
+    resources {
+      srcDir 'test'
+      srcDir 'test/resources'
+      srcDir 'src'
+      srcDir 'src/resources'
+    }
+  }
+ }
+
+repositories {
+     mavenCentral()
+}
+
+// In this section you declare the dependencies for your production and test code
+dependencies {
+	// include backend
+	// compile project(':JobAPPTrackerJPA')
+
+	// spring
+    compile group: 'org.springframework', name: 'spring-webmvc', version:"$springVersion"
+    compile group: 'org.springframework', name: 'spring-orm', version:"$springVersion"
+	compile group: 'javax.servlet', name: 'javax.servlet-api', version:'4.0.1'
+    compile group: 'javax.servlet', name: 'jstl', version:'1.2'
+
+    // The production code uses the SLF4J logging API at compile time
+    compile 'org.slf4j:slf4j-api:1.7.25'
+
+    // hash passwords
+    compile group: 'org.springframework.security', name: 'spring-security-core', version: '5.0.7.RELEASE'
+
+    compile group: 'org.hibernate', name: 'hibernate-validator', version:'6.0.11.Final'
+    compile "org.springframework:spring-test:$springVersion"
+    compile "org.springframework:spring-tx:$springVersion"
+
+	// jackson jars
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.6'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
+	// testing
+    testCompile 'junit:junit:4.12'
+	testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+}
+
